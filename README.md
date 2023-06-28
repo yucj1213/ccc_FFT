@@ -17,7 +17,7 @@ This version of the tutorial has been verified for the following environments.
 
 ## Submission File Tree 
 ├── data  
-/  └── input.txt  
+    └── input.txt  
 ├── Makefile  
 └── src  
    ├── aie_kernels  
