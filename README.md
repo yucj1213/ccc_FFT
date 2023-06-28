@@ -20,11 +20,11 @@ This version of the tutorial has been verified for the following environments.
 │   └── input.txt  
 ├── Makefile  
 └── src  
-  ├── aie_kernels  
-  │   └── fir_asym_8t_16int_vectorized.cpp  
-  ├── aie_kernels.h  
-  ├── graph.cpp  
-  └── graph.h  
+ ├── aie_kernels  
+ │   └── fir_asym_8t_16int_vectorized.cpp  
+ ├── aie_kernels.h  
+ ├── graph.cpp  
+ └── graph.h  
 
 ## AIEEMU
 
