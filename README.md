@@ -16,15 +16,30 @@ This version of the tutorial has been verified for the following environments.
 - Advanced - Explore very large point FFT (8k ~ 64k points) design on VCK5000
 
 ## Submission File Tree  
-├── data  
-&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── input.txt  
-├── Makefile  
-└── src  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── aie_kernels  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── fir_asym_8t_16int_vectorized.cpp  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── aie_kernels.h  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── graph.cpp  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── graph.h  
+├── aie
+│   ├── data
+│   │   ├── inputa_float.txt
+│   │   ├── ref_outputc_float.txt
+│   ├── Makefile
+│   └── src
+│       ├── aie_kernels
+│       ├── aie_kernels.h
+│       ├── graph.cpp
+│       ├── graph.h
+│       └── system_settings.h
+├── host
+│   ├── host.cpp
+│   ├── Makefile
+│   └── matmult.py
+├── hw_link
+│   └── config.cfg
+├── Makefile
+└── pl
+    ├── Makefile
+    └── src
+        ├── config.hpp
+        ├── mm2s.cpp
+        └── s2mm.cpp
 
 ## AIEEMU  
 
