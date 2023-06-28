@@ -17,7 +17,7 @@ This version of the tutorial has been verified for the following environments.
 
 ## Submission File Tree  
 ├── aie
-│   ├── data
+│&nbsp;├── data
 │   │   ├── inputa_float.txt
 │   │   ├── ref_outputc_float.txt
 │   ├── Makefile
