@@ -26,15 +26,17 @@ This version of the tutorial has been verified for the following environments.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── graph.cpp  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── graph.h  
 
-## AIEEMU
+## AIEEMU  
 
-## MATLAB result
 
-## AIE hardware run
 
-## Result compare
+## MATLAB result  
 
-## Reference
+## AIE hardware run  
+准备一个txt文件 第一个数表示fft点的实部 空格 第二个点表示fft的虚部
+## Result compare  
+
+## Reference  
 1. xup_aie_training-main/sources/dsplib_lab
 2. xup_aie_training-main/sources/Vitis_Libraries
 3. vck5000_mixed_kernel_integration-2022.2/vck5000_mixed_kernel_integration-master
