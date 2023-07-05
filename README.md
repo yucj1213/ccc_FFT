@@ -148,7 +148,9 @@ plot(1:length(FFT_out_hardware),X);
 ```  
 通过比较aieemu与hardware所得到的结果 两者一致 所以只比较hardware与matlab的结果的不同  
    ![](images/FFT_compare.png)  
-   ![](images/FFT_different.png)  
+   ![](images/FFT_different.png)    
+
+从结果分析来看，matlab与hardware跑出来的结果存在一定的差异，究其原因应该是input数据选取的因素，在aie中fft算法调用的里面有最大值的限制，这导致了其在到一定值后不会再增加，使得其与matlab中的结果产生了一定的差异。  
 
 ## Reference  
 1. xup_aie_training-main/sources/dsplib_lab
