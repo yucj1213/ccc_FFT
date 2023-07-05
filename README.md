@@ -73,7 +73,7 @@ FFT_data_in = aie_data_input(:,1)+aie_data_input(:,2)*i;
 FFT_data_out = fft(FFT_data_in);
 plot(1:length(FFT_data_out),abs(FFT_data_out));
 ```
-以下是结果图像
+以下是结果图像  
    ![](images/FFT_MATLAB.png)  
    
 ## AIE hardware run  
@@ -146,7 +146,7 @@ title("hardware运行结果")
 hold on
 plot(1:length(FFT_out_hardware),X);
 ```  
-通过比较aieemu与hardware所得到的结果 两者一致 所以只比较hardware与matlab的结果的不同
+通过比较aieemu与hardware所得到的结果 两者一致 所以只比较hardware与matlab的结果的不同  
    ![](images/FFT_compare.png)  
    ![](images/FFT_different.png)  
 
