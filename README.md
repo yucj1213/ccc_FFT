@@ -26,6 +26,8 @@ This version of the tutorial has been verified for the following environments.
 │ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── fft.hpp  
 │ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── graph.cpp  
 │ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── graph.hpp  
+├── build.hw   
+│ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── dsplab.xclbin  
 ├── host  
 │ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── host.cpp  
 │ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Makefile  
@@ -39,8 +41,7 @@ This version of the tutorial has been verified for the following environments.
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── config.hpp  
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── mm2s.cpp  
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── s2mm.cpp  
-
- Vitis_Libraries这个具体放哪里？  
+  
  
 ## AIEemu  
 aie中data文件夹包含仿真所用到的输入数据和参考输出，src文件夹包含所用到的kernel及头文件，makefile用于编译文件及进行相应的仿真。  
@@ -71,8 +72,10 @@ aie_data_input = importdata("input.txt");
 FFT_data_in = aie_data_input(:,1)+aie_data_input(:,2)*i;
 FFT_data_out = fft(FFT_data_in);
 plot(1:length(FFT_data_out),abs(FFT_data_out));
-```  
-
+```
+以下是结果图像
+   ![](images/FFT_MATLAB.png)  
+   
 ## AIE hardware run  
 input.txt输入数据 第一个数表示fft点的实部 空格 第二个点表示fft的虚部。  
 以下是具体的运行步骤：  
@@ -117,20 +120,35 @@ FFT_out_aieemu_txt = importdata("FFT_out_aieemu.txt");
 FFT_out_aieemu = FFT_out_aieemu_txt(:,1)+FFT_out_aieemu_txt(:,2)*i;
 FFT_out_hardware_txt = importdata("FFT_out_hardware.txt");
 FFT_out_hardware = FFT_out_hardware_txt(:,1)+FFT_out_hardware_txt(:,2)*i;
+L_fft=length(FFT_data_in);
 
-figure(1)
-subplot(1,3,1)
-title("aieemu仿真结果");
-plot(1:length(FFT_out_aieemu),abs(FFT_out_aieemu));
+% figure(1)
+% subplot(1,3,1)
+% title("aieemu仿真结果");
+% plot(1:length(FFT_out_aieemu),abs(FFT_out_aieemu));
 
-subplot(1,3,2)
-title("matlab仿真结果");
+subplot(1,2,1)
+title("matlab仿真结果") 
+hold on
 plot(1:length(FFT_out_matlab),abs(FFT_out_matlab));
+axis([0 L_fft 0 32768])
 
-subplot(1,3,3)
-title("hardware运行结果");
+subplot(1,2,2)
+title("hardware运行结果")
+hold on
 plot(1:length(FFT_out_hardware),abs(FFT_out_hardware));
+axis([0 L_fft 0 32768])
+
+X=abs(FFT_out_matlab)-abs(FFT_out_hardware);
+
+figure(2)
+title("hardware运行结果")
+hold on
+plot(1:length(FFT_out_hardware),X);
 ```  
+通过比较aieemu与hardware所得到的结果 两者一致 所以只比较hardware与matlab的结果的不同
+   ![](images/FFT_compare.png)  
+   ![](images/FFT_different.png)  
 
 ## Reference  
 1. xup_aie_training-main/sources/dsplib_lab
