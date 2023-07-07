@@ -19,8 +19,7 @@ This version of the tutorial has been verified for the following environments.
 ## Submission File Tree  
 ├── aie  
 │ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── data  
-│ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── inputa_float.txt  
-│ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── ref_outputc_float.txt  
+│ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── DataInFFT0.txt  
 │ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Makefile  
 │ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── src  
 │ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── fft.hpp  
@@ -41,6 +40,10 @@ This version of the tutorial has been verified for the following environments.
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── config.hpp  
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── mm2s.cpp  
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── s2mm.cpp  
+ └── matlab 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── FFT_compare.m    
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── aie_srs.m  
+
   
  
 ## AIEemu  
@@ -105,52 +108,16 @@ cd host
 aieemu的输出文件命名为FFT_out_aieemu.txt（需要注意的是 此处的数据需要进行一定的处理）   
 hardware的输出文件命名为FFT_out_hardware.txt  
 
-MATLAB程序如下所示  
-
-```
-%利用MATLAB绘制不同的结果图像并进行比较分析
-clear;clc;
-
-aie_data_input = importdata("input.txt");
-FFT_data_in = aie_data_input(:,1)+aie_data_input(:,2)*i;
-FFT_out_matlab = fft(FFT_data_in);
-
-
-FFT_out_aieemu_txt = importdata("FFT_out_aieemu.txt");
-FFT_out_aieemu = FFT_out_aieemu_txt(:,1)+FFT_out_aieemu_txt(:,2)*i;
-FFT_out_hardware_txt = importdata("FFT_out_hardware.txt");
-FFT_out_hardware = FFT_out_hardware_txt(:,1)+FFT_out_hardware_txt(:,2)*i;
-L_fft=length(FFT_data_in);
-
-% figure(1)
-% subplot(1,3,1)
-% title("aieemu仿真结果");
-% plot(1:length(FFT_out_aieemu),abs(FFT_out_aieemu));
-
-subplot(1,2,1)
-title("matlab仿真结果") 
-hold on
-plot(1:length(FFT_out_matlab),abs(FFT_out_matlab));
-axis([0 L_fft 0 32768])
-
-subplot(1,2,2)
-title("hardware运行结果")
-hold on
-plot(1:length(FFT_out_hardware),abs(FFT_out_hardware));
-axis([0 L_fft 0 32768])
-
-X=abs(FFT_out_matlab)-abs(FFT_out_hardware);
-
-figure(2)
-title("hardware运行结果")
-hold on
-plot(1:length(FFT_out_hardware),X);
-```  
+MATLAB程序位于github文件夹的matlab中  
+其中包含FFT_compare.m与aie_srs.m两个文件  
+FFT_compare.m 用于完成各类数据的导入及matlab中对输入数据的FFT运算，最后对两种不同方式的FFT结果进行了比较  
+aie_srs.m 则是用于对matlab中FFT的结果进行限幅   
 通过比较aieemu与hardware所得到的结果 两者一致 所以只比较hardware与matlab的结果的不同  
    ![](images/FFT_compare.png)  
    ![](images/FFT_different.png)    
+   ![](images/FFT_error_rate.png)    
 
-从结果分析来看，matlab与hardware跑出来的结果存在一定的差异，究其原因应该是input数据选取的因素，在aie中fft算法调用的里面有最大值的限制，这导致了其在到一定值后不会再增加，使得其与matlab中的结果产生了一定的差异。  
+从结果分析来看，matlab与hardware跑出来的结果存在一定的差异，但是整体来说差距不是很大，控制在个位数左右，误差率大部分在1.5*10^-4左右。  
 
 ## Reference  
 1. xup_aie_training-main/sources/dsplib_lab
