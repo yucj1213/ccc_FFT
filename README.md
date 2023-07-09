@@ -114,8 +114,10 @@ hardware的输出文件命名为FFT_out_hardware.txt
 
 MATLAB程序位于github文件夹的matlab中  
 其中包含FFT_compare.m与aie_srs.m两个文件  
+  
 FFT_compare.m 用于完成各类数据的导入及matlab中对输入数据的FFT运算，最后对两种不同方式的FFT结果进行了比较  
 aie_srs.m 则是用于对matlab中FFT的结果进行限幅   
+  
 通过比较aieemu与hardware所得到的结果 两者一致 所以只比较hardware与matlab的结果的不同  
    ![](images/FFT_compare.png)  
    ![](images/FFT_different.png)    
